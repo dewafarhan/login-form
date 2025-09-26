@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,12 +26,15 @@ Route::group(['middleware' => ['auth', 'checkrole:staff', ]], function () {
 });
 
 Route::group(['middleware' => ['auth', 'checkrole:staff', 'checkstatus'   ]], function () {
-    Route::get('/staff', fn() => 'Halo Staff');
+    Route::get('/staff', [StaffController::class, 'index']);
 });
 Route::group(['middleware' => ['auth', 'checkrole:superadmin,admin']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
 });
 Route::group(['middleware' => ['auth', 'checkrole:superadmin,admin']], function () {
-    Route::get('/user', fn() => 'user');
+    Route::resource('users', UserController::class);
 });
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
+
+Route::get('/contact', function () {return view('contact');})->name('contact');
+

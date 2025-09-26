@@ -45,7 +45,7 @@
           </li>
           @if (Auth::user()->role === 'admin'|| Auth::user()->role === 'superadmin')            
           <li class="nav-item">
-              <a href="/user" class="nav-link">
+              <a href="/users" class="nav-link">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
                     Users
