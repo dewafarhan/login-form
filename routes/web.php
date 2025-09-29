@@ -28,11 +28,12 @@ Route::group(['middleware' => ['auth', 'checkrole:staff', ]], function () {
 Route::group(['middleware' => ['auth', 'checkrole:staff', 'checkstatus'   ]], function () {
     Route::get('/staff', [StaffController::class, 'index']);
 });
-Route::group(['middleware' => ['auth', 'checkrole:superadmin,admin']], function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
-});
-Route::group(['middleware' => ['auth', 'checkrole:superadmin,admin']], function () {
-    Route::resource('users', UserController::class);
+// Route::group(['middleware' => ['auth', 'checkrole:superadmin,admin']], function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index']);
+// });
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('permission:view dashboard');
+    Route::resource('users', UserController::class)->middleware('permission:manage users');
 });
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 

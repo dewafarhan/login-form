@@ -43,16 +43,16 @@
               </p>
             </a>
           </li>
-          @if (Auth::user()->role === 'admin'|| Auth::user()->role === 'superadmin')            
+          @can('manage users')
           <li class="nav-item">
-              <a href="/users" class="nav-link">
+              <a href="/users" class="nav-link {{(request()->is('users*') ? 'active' : '')}}">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
                     Users
                 </p>
             </a>
         </li>
-        @endif
+         @endcan
           <li class="nav-item">
             <a href="/logout" class="nav-link">
               <i class="nav-icon fas fa-sign-out-alt"></i>

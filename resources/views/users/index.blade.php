@@ -7,13 +7,17 @@
             <div class="card">
                 <div class="card-header">User Management</div>
 
-                <div class="card-body">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Add New User</a>
-
-                    @if(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
+                {{-- ...existing code... --}}
+                <div class="card-header">
+                    @can('manage users')
+                        <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah User</a>
+                    @endcan
+                </div>
+                {{-- ...existing code... --}}
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
                     @endif
 
                     <table class="table">
@@ -47,5 +51,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

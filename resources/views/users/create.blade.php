@@ -22,14 +22,33 @@
                             <label class="form-label">Password</label>
                             <input type="password" class="form-control" name="password" required>
                         </div>
+                        
+                        {{-- Bagian untuk Roles --}}
                         <div class="mb-3">
-                            <label class="form-label">Role</label>
-                            <select class="form-control" name="role" required>
-                                <option value="Staff">Staff</option>
-                                <option value="Administrator">Administrator</option>
-                                <option value="Superadmin">Superadmin</option>
-                            </select>
+                            <label class="form-label"><strong>Roles</strong></label>
+                            @foreach ($roles as $role)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->name }}" id="role_{{ $role->id }}">
+                                    <label class="form-check-label" for="role_{{ $role->id }}">
+                                        {{ $role->name }}
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
+
+                        {{-- Bagian untuk Permissions Tambahan --}}
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Direct Permissions</strong> (Izin tambahan di luar role)</label>
+                            @foreach ($permissions as $permission)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $permission->name }}" id="permission_{{ $permission->id }}">
+                                    <label class="form-check-label" for="permission_{{ $permission->id }}">
+                                        {{ $permission->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Create User</button>
                     </form>
                 </div>
