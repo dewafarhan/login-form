@@ -16,13 +16,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         @if(auth()->user()->role == 'Superadmin' || auth()->user()->role == 'Administrator')
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                         </li>
-                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
                         </li>
