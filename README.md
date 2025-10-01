@@ -9,7 +9,7 @@
 
 ## Membuat Fitur Login Dengan Laravel
 
-Membuat rangkaian sistem login menggunakan framework "Laravel", project ini bertujuan untuk login dengan menggunakan sistem verifikasi OTP via email.
+Membuat rangkaian sistem login menggunakan framework "Laravel", project ini bertujuan untuk login dengan menggunakan sistem verifikasi OTP via email. Dan juga sudah menambahkan implemntasi spatie untuk user.
 
 ## Fitur
 
@@ -17,6 +17,7 @@ Fitur yg terdapat dalam sistem login, yaitu:
 1. Login/Registrasi (Membuat akun baru).
 2. Registrasi menggunakan verifikasi email.
 3. Terdapat CRUD (create, read, update, delete) user,untuk superadmin.
+4. Implentasi user permission menggunakan spatie.
 
 ### Cara instalasi
 
