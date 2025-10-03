@@ -8,17 +8,42 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Routing\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('id', 'desc')->get();
-        return view('users.index', compact('users'));
+        return view('users.index');
     }
 
-    public function create()
-    {
+    public function data() {
+
+        $users = User::with('roles');
+
+    return DataTables::of($users)
+        ->addColumn('role', function ($user) {
+            return $user->roles->pluck('name')->implode(', ');
+        })
+        ->addColumn('action', function ($user) {
+            $editUrl = route('users.edit', $user->id);
+            $deleteUrl = route('users.destroy', $user->id);
+            $editButton = '<a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit<a/>';
+            $deleteButton = '
+                <form action="' . $deleteUrl . '" method="POST" class="d-inline">
+                    ' . csrf_field() . '
+                    ' . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</button>
+                </form>
+            ';
+            return $editButton . ' ' . $deleteButton;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+    }
+
+        public function create()
+        {
         $roles = Role::all();
         $permissions = Permission::all();
         return view('users.create', compact('roles', 'permissions'));

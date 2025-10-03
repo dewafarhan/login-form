@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth', 'checkrole:staff', 'checkstatus'   ]], fu
 // });
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('permission:view dashboard');
+    
+    Route::get('users/data', [UserController::class, 'data'])->name('users.data')->middleware('permission:manage users');
+    
     Route::resource('users', UserController::class)->middleware('permission:manage users');
 });
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');

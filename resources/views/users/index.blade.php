@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+{{-- [TAMBAH] Sisipkan CSS DataTables di sini --}}
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css">
+@endpush
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -20,7 +25,7 @@
                     </div>
                     @endif
 
-                    <table class="table">
+                    <table class="table table-bordered table-hover" id="users-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -30,21 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->role }}</td>
-                                <td>
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ route('users.destroy', $user) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
+                                {{-- Data akan diisi oleh DataTables --}}
                         </tbody>
                     </table>
                 </div>
@@ -52,3 +43,23 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(function() {
+            $('#users-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('users.data') }}',
+                columns: [
+                    { data: 'name', name: 'name' },
+                    { data: 'email', name: 'email' },
+                    { data: 'role', name: 'roles.name', orderable: false, searchable: false },
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                ]
+            });
+        });
+    </script>
+@endpush
