@@ -11,19 +11,32 @@ use Illuminate\Database\QueryException;
 class AuthController extends Controller
 {
     public function login(Request $request) {
-        $credentials = $request->validate([
+        // Validasi input
+        $request->validate([
             'email' => 'required|email|max:50',
             'password' => 'required|max:50',
         ]);
 
+        // Mencoba otentikasi pengguna
         if (Auth::attempt($request->only('email', 'password'), $request->remember)) {
-            if(Auth::user()->role == 'staff') return redirect('/staff');
-            return redirect()->intended('/dashboard');
+            $request->session()->regenerate();
+
+            // Menentukan URL redirect berdasarkan role
+            $redirect_url = Auth::user()->role == 'staff' ? '/staff' : '/dashboard';
+
+            // Mengembalikan response JSON jika berhasil
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Login berhasil! Anda akan dialihkan...',
+                'redirect_url' => $redirect_url
+            ]);
         }
 
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+        // Mengembalikan response JSON jika gagal dengan status 401 (Unauthorized)
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Email atau password yang Anda masukkan salah.'
+        ], 401);
     }
 
     function register(Request $request){
