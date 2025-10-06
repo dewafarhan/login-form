@@ -13,11 +13,33 @@ Membuat rangkaian sistem login menggunakan framework "Laravel", project ini bert
 
 ## Fitur
 
-Fitur yg terdapat dalam sistem login, yaitu:
-1. Login/Registrasi (Membuat akun baru).
-2. Registrasi menggunakan verifikasi email.
-3. Terdapat CRUD (create, read, update, delete) user,untuk superadmin.
-4. Implentasi user permission menggunakan spatie.
+Proyek ini dilengkapi dengan berbagai fitur modern untuk memastikan fungsionalitas, keamanan, dan pengalaman pengguna yang baik:
+
+1.  **Sistem Autentikasi Lengkap**:
+    -   Registrasi pengguna baru.
+    -   Login dengan validasi *real-time*.
+    -   Proses verifikasi akun melalui OTP (One-Time Password) yang dikirim via email.
+
+2.  **Manajemen Pengguna (CRUD)**:
+    -   Fitur Create, Read, Update, dan Delete untuk mengelola data pengguna.
+    -   Hanya dapat diakses oleh pengguna dengan peran `superadmin dan admin`.
+
+3.  **Manajemen Peran & Hak Akses**:
+    -   Implementasi *role-based access control* (RBAC) menggunakan paket `spatie/laravel-permission`.   
+    -   Memungkinkan pengaturan hak akses yang fleksibel untuk setiap peran pengguna.
+
+4.  **Antarmuka Pengguna Interaktif**:
+    -   Validasi form sisi klien secara *real-time* menggunakan **jQuery Validator**.
+    -   Notifikasi dinamis dan modern dengan **Bootstrap Modals** dan **SweetAlert**.
+    -   Template admin yang responsif dan kaya fitur menggunakan **AdminLTE 3**.
+
+## Teknologi yang Digunakan
+
+-   **Backend**: Laravel 11, PHP 8.2
+-   **Frontend**: Blade, AdminLTE 3, Bootstrap, jQuery
+-   **UI Libraries**: jQuery Validator, SweetAlert
+-   **Database**: MySQL / MariaDB
+-   **Otorisasi**: Spatie Laravel-Permission
 
 ### Cara instalasi
 
