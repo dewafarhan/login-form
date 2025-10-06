@@ -1,5 +1,8 @@
 <?php
 // ...existing code...
+
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -12,7 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // ...existing code...
+        // Panggil UserSeeder untuk memasukkan data pengguna
+        $this->call([
+            UserSeeder::class,
+        ]);
 
         // Membuat role jika belum ada
         $superadmin = Role::firstOrCreate(['name' => 'superadmin']);

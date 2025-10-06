@@ -16,9 +16,25 @@ class AuthController extends Controller
             'password' => 'required|max:50',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'), $request->remember)) {
-            if(Auth::user()->role == 'staff') return redirect('/staff');
-            return redirect()->intended('/dashboard');
+        if (Auth::attempt($credentials, $request->remember)) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+            $redirect_url = $user->role == 'staff' ? '/staff' : '/dashboard';
+
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Login successful! Redirecting...',
+                    'redirect_url' => $redirect_url
+                ]);
+            }
+            return redirect()->intended($redirect_url);
+        }
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Email atau password salah.',
+            ], 422);
         }
 
         return back()->withErrors([
