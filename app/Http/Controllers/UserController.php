@@ -71,7 +71,7 @@ class UserController extends Controller
             $user->syncPermissions($request->permissions);
         }
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('users.index')->with('success', 'User berhasil dibuat.');
     }
 
     public function edit(User $user)
@@ -103,12 +103,13 @@ class UserController extends Controller
         $user->syncRoles($request->roles ?? []);
         $user->syncPermissions($request->permissions ?? []);
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('users.index')->with('success', 'User berhasil diupdate.');
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
+        $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'User berhasil dihapus.');
     }
 }
